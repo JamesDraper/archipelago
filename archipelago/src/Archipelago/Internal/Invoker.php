@@ -25,6 +25,7 @@ class Archipelago_Internal_Invoker
         Archipelago_Island_Outer_Request $outerRequest
     ) {
         $innerRequest = $adapter->requestIn($outerRequest);
+        // @phpstan-ignore instanceof.alwaysTrue
         if (!$innerRequest instanceof Archipelago_Island_Inner_Request) {
             throw $this->typeExceptionFactory->makeReturnObject(
                 $adapter,
@@ -36,6 +37,7 @@ class Archipelago_Internal_Invoker
         }
 
         $innerResponse = $ingress->invoke($innerRequest);
+        // @phpstan-ignore instanceof.alwaysTrue
         if (!$innerResponse instanceof Archipelago_Island_Inner_Response) {
             throw $this->typeExceptionFactory->makeReturnObject(
                 $ingress,
@@ -47,6 +49,7 @@ class Archipelago_Internal_Invoker
         }
 
         $outerResponse = $adapter->responseOut($innerResponse);
+        // @phpstan-ignore instanceof.alwaysTrue
         if (!$outerResponse instanceof Archipelago_Island_Outer_Response) {
             throw $this->typeExceptionFactory->makeReturnObject(
                 $adapter,
