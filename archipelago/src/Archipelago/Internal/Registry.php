@@ -51,6 +51,6 @@ class Archipelago_Internal_Registry
      */
     public function remove($key)
     {
-        unset($this->items[$key]);
+        unset($this->map[$key]);
     }
 }
