@@ -37,4 +37,5 @@ require dirname(__FILE__) . '/src/Archipelago/Internal/TypeExceptionFactory.php'
 
 // Validators
 require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/BootstrapperValidator.php';
+require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/ConfiguratorValidator.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/IngressValidator.php';
