@@ -10,6 +10,7 @@ class Archipelago_Internal_TypeExceptionFactory
      * @param string $method
      * @param int $position
      * @param class-string $expected
+     * @param bool $nullable
      * @param mixed $value
      * @return Archipelago_TypeException
      */
@@ -25,6 +26,7 @@ class Archipelago_Internal_TypeExceptionFactory
      * @param string $method
      * @param int $position
      * @param string $expected
+     * @param bool $nullable
      * @param mixed $value
      * @return Archipelago_TypeException
      */
