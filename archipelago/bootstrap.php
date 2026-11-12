@@ -19,3 +19,6 @@ require dirname(__FILE__) . '/src/Archipelago/Island.php';
 
 // Archipelago
 require dirname(__FILE__) . '/src/Archipelago.php';
+
+// Internals
+require dirname(__FILE__) . '/src/Archipelago/Internal/Root.php';

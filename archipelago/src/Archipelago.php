@@ -8,7 +8,7 @@ final class Archipelago
      */
     public static function run($island, Archipelago_Island_Outer_Request $request)
     {
-        // todo: finish this
+        return Archipelago_Internal_Root::getInstance()->run($island, $request);
     }
 
     /**
@@ -16,7 +16,7 @@ final class Archipelago
      */
     public static function register(Archipelago_Island $island)
     {
-        // todo: finish this.
+        Archipelago_Internal_Root::getInstance()->register($island);
     }
 
     private function __construct() {}
