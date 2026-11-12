@@ -34,3 +34,6 @@ require dirname(__FILE__) . '/src/Archipelago/Internal/Boundary/NullAdapter.php'
 require dirname(__FILE__) . '/src/Archipelago/Internal/Root.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/TypeFormatter.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/TypeExceptionFactory.php';
+
+// Validators
+require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/IngressValidator.php';
