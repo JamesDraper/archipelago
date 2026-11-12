@@ -40,3 +40,4 @@ require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/AdapterValidato
 require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/BootstrapperValidator.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/ConfiguratorValidator.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/IngressValidator.php';
+require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/NameValidator.php';
