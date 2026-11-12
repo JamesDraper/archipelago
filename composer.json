@@ -1,8 +1,22 @@
 {
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
     "require-dev": {
-        "phpstan/phpstan": "^2.3"
+        "phpstan/phpstan": "^2.3",
+        "phpunit/phpunit": "^13.4",
+        "phpstan/phpstan-phpunit": "^2.1"
     },
     "scripts": {
+        "phpunit": [
+            "@phpunit.unit",
+            "@phpunit.integration"
+        ],
+        "phpunit.coverage": "phpunit --coverage-html coverage",
+        "phpunit.unit": "phpunit --testsuite=unit",
+        "phpunit.integration": "phpunit --testsuite=integration",
         "phpstan": "phpstan analyze"
     }
 }

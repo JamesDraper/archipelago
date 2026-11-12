@@ -6,3 +6,6 @@ parameters:
     excludePaths:
         analyse:
             - archipelago/src/Archipelago/Internal/Root.php # Todo: Remove once file is complete.
+
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
