@@ -1,4 +1,7 @@
 {
+    "autoload": {
+        "files": ["archipelago/bootstrap.php"]
+    },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests"
