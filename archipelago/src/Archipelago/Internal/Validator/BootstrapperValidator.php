@@ -18,6 +18,7 @@ class Archipelago_Internal_Validator_BootstrapperValidator
     /**
      * @param mixed $bootstrapper
      * @return void
+     * @throws Archipelago_TypeException
      */
     public function assertValidType(Archipelago_Island $island, $bootstrapper)
     {

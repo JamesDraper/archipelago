@@ -18,6 +18,7 @@ class Archipelago_Internal_Validator_IngressValidator
     /**
      * @param mixed $ingress
      * @return void
+     * @throws Archipelago_TypeException
      */
     public function assertValidType(Archipelago_Island $island, $ingress)
     {
