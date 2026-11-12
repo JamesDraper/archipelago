@@ -20,6 +20,11 @@ require dirname(__FILE__) . '/src/Archipelago/Island.php';
 // Archipelago
 require dirname(__FILE__) . '/src/Archipelago.php';
 
+// Exceptions
+require dirname(__FILE__) . '/src/Archipelago/Exception.php';
+require dirname(__FILE__) . '/src/Archipelago/BadValueException.php';
+require dirname(__FILE__) . '/src/Archipelago/TypeException.php';
+
 // Internals
 require dirname(__FILE__) . '/src/Archipelago/Internal/Root.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/TypeFormatter.php';
