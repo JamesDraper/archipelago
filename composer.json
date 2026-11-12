@@ -16,6 +16,10 @@
         "phpstan/phpstan-phpunit": "^2.1"
     },
     "scripts": {
+        "test": [
+            "@phpunit",
+            "@phpstan"
+        ],
         "phpunit": [
             "@phpunit.type-formatter",
             "@phpunit.unit",
