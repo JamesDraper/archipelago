@@ -17,10 +17,12 @@
     },
     "scripts": {
         "phpunit": [
+            "@phpunit.type-formatter",
             "@phpunit.unit",
             "@phpunit.integration"
         ],
         "phpunit.coverage": "phpunit --coverage-html coverage",
+        "phpunit.type-formatter": "phpunit --testsuite=type-formatter",
         "phpunit.unit": "phpunit --testsuite=unit",
         "phpunit.integration": "phpunit --testsuite=integration",
         "phpstan": "phpstan analyze"
