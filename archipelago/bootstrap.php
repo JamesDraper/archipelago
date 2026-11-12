@@ -28,3 +28,4 @@ require dirname(__FILE__) . '/src/Archipelago/TypeException.php';
 // Internals
 require dirname(__FILE__) . '/src/Archipelago/Internal/Root.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/TypeFormatter.php';
+require dirname(__FILE__) . '/src/Archipelago/Internal/TypeExceptionFactory.php';
