@@ -1,0 +1,8 @@
+parameters:
+    level: max
+    paths:
+        - archipelago
+
+    excludePaths:
+        analyse:
+            - archipelago/src/Archipelago/Internal/Root.php # Todo: Remove once file is complete.
