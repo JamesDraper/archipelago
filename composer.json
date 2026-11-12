@@ -7,6 +7,9 @@
             "Tests\\": "tests"
         }
     },
+    "require": {
+        "php": ">=5.0"
+    },
     "require-dev": {
         "phpstan/phpstan": "^2.3",
         "phpunit/phpunit": "^13.4",
