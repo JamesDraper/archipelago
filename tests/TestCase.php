@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Tests;
 
-abstract class TestCase extends \PHPUnit\Framework\TestCase
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+
+abstract class TestCase extends MockeryTestCase
 {
 }

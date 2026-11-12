@@ -25,6 +25,11 @@ require dirname(__FILE__) . '/src/Archipelago/Exception.php';
 require dirname(__FILE__) . '/src/Archipelago/BadValueException.php';
 require dirname(__FILE__) . '/src/Archipelago/TypeException.php';
 
+// Null boundaries
+require dirname(__FILE__) . '/src/Archipelago/Internal/Boundary/NullBootstrapper.php';
+require dirname(__FILE__) . '/src/Archipelago/Internal/Boundary/NullConfigurator.php';
+require dirname(__FILE__) . '/src/Archipelago/Internal/Boundary/NullAdapter.php';
+
 // Internals
 require dirname(__FILE__) . '/src/Archipelago/Internal/Root.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/TypeFormatter.php';
