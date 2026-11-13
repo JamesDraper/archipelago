@@ -2,6 +2,9 @@
 
 **A legacy PHP refactoring framework. Compatible with PHP 5.0.0 through to current PHP versions.**
 
+> [!WARNING]
+> **Work in Progress:** This package is currently in active development ahead of its initial `1.0.0` release. The API is subject to change without notice, and it is **not recommended for production use** yet.
+
 Archipelago is a small framework that helps developers incrementally refactor legacy/spaghetti PHP applications.
 
 It provides a structured approach to extracting functionality from an existing application, isolating it behind well-defined boundaries, and progressively replacing the original implementation without requiring a complete rewrite.
