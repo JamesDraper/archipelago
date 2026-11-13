@@ -1,4 +1,6 @@
 {
+    "name": "james-draper/archipelago",
+    "description": "PHP 5.0.0+ compatible legacy refactoring framework.",
     "autoload": {
         "files": ["archipelago/bootstrap.php"]
     },
