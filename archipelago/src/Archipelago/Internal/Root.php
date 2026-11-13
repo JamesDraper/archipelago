@@ -55,7 +55,7 @@ class Archipelago_Internal_Root
                 new Archipelago_Internal_Registry(),
                 new Archipelago_Internal_Registry(),
                 $islandFactory,
-                $invoker,
+                $invoker
             );
         }
 

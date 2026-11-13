@@ -43,7 +43,7 @@ class Archipelago_Internal_Boundary_NullAdapter implements Archipelago_Island_Bo
             '%s must implement both %s and %s when no adapter is used.',
             get_class($object),
             $innerInterface,
-            $outerInterface,
+            $outerInterface
         );
 
         return new Archipelago_TypeException($message);
