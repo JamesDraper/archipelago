@@ -80,7 +80,7 @@ At this point you keep going, and whenever the friction between 2 or more island
 |-------------------------|---------------------------------------------|
 | `application`           | Handles all application responsibilities.   |
 
-At this point, you've done it! All that remains to do now is to remove archipelago. Congratulations!
+At this point, you've done it! All that remains to do now is to remove Archipelago. Congratulations!
 
 The first changes you made were very low-risk and easily reversible. Every change you made shrunk the legacy codebase slightly. You never needed to plan in advance, and instead you let the logic buried in the spaghetti code reveal itself to you over time. Most importantly, **you never needed to build a replacement application**.
 
