@@ -84,6 +84,30 @@ At this point, you've done it! All that remains to do now is to remove archipela
 
 The first changes you made were very low-risk and easily reversible. Every change you made shrunk the legacy codebase slightly. You never needed to plan in advance, and instead you let the logic buried in the spaghetti code reveal itself to you over time. Most importantly, **you never needed to build a replacement application**.
 
+## Island Architecture
+
+An Island is composed of three logical areas: Inner, Outer, and Boundary. Each has a distinct responsibility and a set of restrictions governing its dependencies.
+
+### Inner
+
+The inner contains the actual logic extracted from the legacy application.
+
+It is deliberately isolated from the rest of the codebase. It must not reference classes or contain objects defined outside the Inner.
+
+This restriction ensures that the implementation can evolve independently of the legacy application and other islands.
+
+### Outer
+
+The Outer provides the integration point between the island and the surrounding application.
+
+It may reference classes and objects belonging to the wider application, but must not reference anything from the Inner or from another island.
+
+### Boundary
+
+The boundary connects the Inner and the Outer.
+
+It is allowed to reference classes and objects in the Inner, the Outer, the Legacy app, but never anything from other islands.
+
 ## Installation
 
 Archipelago can be installed in one of two ways:
