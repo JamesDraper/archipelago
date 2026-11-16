@@ -7,7 +7,7 @@
 
 Archipelago is a small framework that helps developers incrementally refactor legacy/spaghetti PHP applications.
 
-It provides a structured approach to extracting functionality from an existing application, moving it into isolated self-contained areas called **islands**, and progressively replacing those islands as the original logic of the application is rediscovered. All without requiring an application rewrite.
+It provides a structured approach to extracting functionality from an existing application, moving it into isolated self-contained areas called **Islands**, and progressively replacing those Islands as the original logic of the application is rediscovered. All without requiring an application rewrite.
 
 ```mermaid
 flowchart TB
@@ -32,9 +32,9 @@ flowchart TB
 
 Let's say you have a legacy e-commerce application. It's currently spaghetti code and badly needs to be untangled.
 
-Once Archipelago is installed, you would start by identifying areas of your codebase that could be extracted into islands. An island need not be large at this point, 2 or 3 lines of extracted code would do. If you see the same code repeated in several places in the spaghetti, that would also be a good candidate. You don't need to have a plan yet, in fact you shouldn't. But you do need to remember the golden rule: **no island may ever send messages to another island**.
+Once Archipelago is installed, you would start by identifying areas of your codebase that could be extracted into Islands. An Island need not be large at this point, 2 or 3 lines of extracted code would do. If you see the same code repeated in several places in the spaghetti, that would also be a good candidate. You don't need to have a plan yet, in fact you shouldn't. But you do need to remember the golden rule: **no Island may ever send messages to another Island**.
 
-Let's say that after some time, you ended up with the following islands:
+Let's say that after some time, you ended up with the following Islands:
 
 | Island                   | Responsibility                   |
 |--------------------------|----------------------------------|
@@ -51,9 +51,9 @@ Let's say that after some time, you ended up with the following islands:
 | `shipping_calculator`    | Calculates shipping costs.       |
 | `order_number_generator` | Generates unique order numbers.  |
 
-Since no island may ever send messages to another island, you likely would have found that a lot of the islands you created were using the legacy application to send messages to one another. That's okay. What that is telling you is that those inter-related concerns are likely part of larger domains. You're starting to rediscover the initial application logic lost in the spaghetti.
+Since no Island may ever send messages to another Island, you likely would have found that a lot of the Islands you created were using the legacy application to send messages to one another. That's okay. What that is telling you is that those inter-related concerns are likely part of larger domains. You're starting to rediscover the initial application logic lost in the spaghetti.
 
-The next step is to start thinking about replacing some of those smaller islands with larger islands. Let's say that you were able to create the following replacements:
+The next step is to start thinking about replacing some of those smaller Islands with larger Islands. Let's say that you were able to create the following replacements:
 
 | Island                  | Replaces                                                                           | Responsibility                              |
 |-------------------------|------------------------------------------------------------------------------------|---------------------------------------------|
@@ -74,7 +74,7 @@ That gives you this:
 | `currency_converter`    | Converts between currencies.                |
 | `address_validator`     | Validates postal addresses.                 |
 
-At this point you keep going, and whenever the friction between 2 or more islands becomes inconvenient, you think about how you might replace them with a larger island handling the same responsibilities. If you keep going long enough you will get this:
+At this point you keep going, and whenever the friction between 2 or more Islands becomes inconvenient, you think about how you might replace them with a larger Island handling the same responsibilities. If you keep going long enough you will get this:
 
 | Island                  | Responsibility                              |
 |-------------------------|---------------------------------------------|
@@ -86,7 +86,7 @@ The first changes you made were very low-risk and easily reversible. Every chang
 
 ## Island Architecture
 
-An island is composed of three logical areas: Inner, Outer, and Boundary. Each has a distinct responsibility and a set of restrictions governing its dependencies.
+An Island is composed of three logical areas: Inner, Outer, and Boundary. Each has a distinct responsibility and a set of restrictions governing its dependencies.
 
 ### Inner
 
@@ -96,7 +96,7 @@ It must not reference classes or contain objects defined outside the Inner.
 
 ### Outer
 
-The Outer provides the integration point between the island and the surrounding application.
+The Outer provides the integration point between the Island and the surrounding application.
 
 It must not reference classes or contain objects defined inside the Inner, or defined in other Islands.
 
@@ -104,7 +104,7 @@ It must not reference classes or contain objects defined inside the Inner, or de
 
 The Boundary connects the Inner and the Outer.
 
-It may not reference classes or contain objects defined inside other islands, but otherwise has no restrictions.
+It may not reference classes or contain objects defined inside other Islands, but otherwise has no restrictions.
 
 ## Installation
 
