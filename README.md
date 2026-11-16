@@ -32,7 +32,7 @@ flowchart TB
 
 Let's say you have a legacy e-commerce application. It's currently spaghetti code and badly needs to be untangled.
 
-Once Archipelago is installed, you would start by identifying areas of your codebase that could be extracted into islands. An island need not be large at this point, 2 or 3 lines of extracted code would do. If you see the same code repeated in several places in the spaghetti, that would also be a good candidate. You don't need to have a plan yet, in fact you shouldn't. But you do need to remember the golden rule: **no island may ever send messages to another island**.
+Once Archipelago is installed, you would start by identifying areas of your codebase that could be extracted into islands. An island need not be large at this point; 2 or 3 lines of extracted code would do. If you see the same code repeated in several places in the spaghetti, that would also be a good candidate. You don't need to have a plan yet, in fact you shouldn't. But you do need to remember the golden rule: **no island may ever send messages to another island**.
 
 Let's say that after some time, you ended up with the following islands:
 
@@ -53,7 +53,7 @@ Let's say that after some time, you ended up with the following islands:
 
 Since no island may ever send messages to another island, you likely would have found that a lot of the islands you created were using the legacy application to send messages to one another. That's okay. What that is telling you is that those inter-related concerns are likely part of larger domains. You're starting to rediscover the initial application logic lost in the spaghetti.
 
-The next step is to start thinking about replacing some of those smaller islands with larger islands. Let's say that were able to create the following replacements:
+The next step is to start thinking about replacing some of those smaller islands with larger islands. Let's say that you were able to create the following replacements:
 
 | Island                  | Replaces                                                                           | Responsibility                              |
 |-------------------------|------------------------------------------------------------------------------------|---------------------------------------------|
@@ -74,7 +74,7 @@ That gives you this:
 | `currency_converter`    | Converts between currencies.                |
 | `address_validator`     | Validates postal addresses.                 |
 
-At this point you keep going, and whenever the friction between 2 or more islands becomes inconvenient, you think about how you might replace them with a larger islands handling the same responsibilities. If you keep going long enough you will get this:
+At this point you keep going, and whenever the friction between 2 or more islands becomes inconvenient, you think about how you might replace them with a larger island handling the same responsibilities. If you keep going long enough you will get this:
 
 | Island                  | Responsibility                              |
 |-------------------------|---------------------------------------------|
@@ -86,11 +86,11 @@ The first changes you made were very low-risk and easily reversible. Every chang
 
 ## Island Architecture
 
-An Island is composed of three logical areas: Inner, Outer, and Boundary. Each has a distinct responsibility and a set of restrictions governing its dependencies.
+An island is composed of three logical areas: Inner, Outer, and Boundary. Each has a distinct responsibility and a set of restrictions governing its dependencies.
 
 ### Inner
 
-The inner contains the actual logic extracted from the legacy application.
+The Inner contains the actual logic extracted from the legacy application.
 
 It is deliberately isolated from the rest of the codebase. It must not reference classes or contain objects defined outside the Inner.
 
@@ -104,9 +104,9 @@ It may reference classes and objects belonging to the wider application, but mus
 
 ### Boundary
 
-The boundary connects the Inner and the Outer.
+The Boundary connects the Inner and the Outer.
 
-It is allowed to reference classes and objects in the Inner, the Outer, the Legacy app, but never anything from other islands.
+It is allowed to reference classes and objects in the Inner, the Outer and the legacy application, but never anything from other islands.
 
 ## Installation
 
