@@ -117,7 +117,7 @@ Archipelago can be installed in one of two ways:
 Install Archipelago through Composer:
 
 ```bash
-composer require jamesdraper/archipelago
+composer require james-draper/archipelago
 ```
 
 ### Manual Installation
