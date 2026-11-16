@@ -88,6 +88,48 @@ The first changes you made were very low-risk and easily reversible. Every chang
 
 An Island is composed of three logical areas: Inner, Outer, and Boundary. Each has a distinct responsibility and a set of restrictions governing its dependencies.
 
+```mermaid
+flowchart TB
+    LEGACY["Legacy Application"]
+
+    subgraph ISLAND["Island"]
+        direction LR
+
+        subgraph INNER["Inner"]
+            direction LR
+
+            INNER_REQUEST["Inner Request"]
+            INGRESS["Ingress"]
+            INNER_RESPONSE["Inner Response"]
+
+            INNER_REQUEST --> INGRESS
+            INGRESS --> INNER_RESPONSE
+        end
+
+        subgraph BOUNDARY["Boundary"]
+            direction LR
+
+            ADAPTER["Adapter"]
+        end
+
+        subgraph OUTER["Outer"]
+            direction LR
+
+            OUTER_REQUEST["Outer Request"]
+            OUTER_RESPONSE["Outer Response"]
+        end
+    end
+
+    LEGACY --> OUTER_REQUEST
+    OUTER_RESPONSE --> LEGACY
+
+    OUTER_REQUEST --> ADAPTER
+    ADAPTER --> INNER_REQUEST
+
+    INNER_RESPONSE --> ADAPTER
+    ADAPTER --> OUTER_RESPONSE
+```
+
 ### Inner
 
 The Inner contains the actual logic extracted from the legacy application.
@@ -162,7 +204,7 @@ This translates between the application's world and the Island's world, on every
 
 This is the only class that knows about both sides. Because the Inner never sees an application class, it can be tested and reasoned about in isolation, and the application's objects can change without touching the Inner.
 
-This is an optional component. If it is not used, then requests to the Island must implement both `Archipelago_Island_Inner_Request` and `Archipelago_Island_Outer_Request`, and responses from the Ingress must implement both `Archipelago_Island_Inner_Response` and `Archipelago_Island_Outer_Response`. Because requests must follow inner and outer interface rules, they must not contain references to any classes defined anywhere inside or outside of an island. That means simple data only such as strings, integers, arrays etc. This allows for a simpler way to implement smaller Islands while keeping that guarantee that each side of the boundary remains isolated from the other.
+This is an optional component. If it is not used, then requests to the Island must implement both `Archipelago_Island_Inner_Request` and `Archipelago_Island_Outer_Request`, and responses from the Ingress must implement both `Archipelago_Island_Inner_Response` and `Archipelago_Island_Outer_Response`. This means that neither can reference any classes defined anywhere, and must use simple data types only such as strings, integers, arrays etc. This allows for a simpler way to implement smaller Islands while keeping that guarantee that each side of the boundary remains isolated from the other.
 
 #### `Archipelago_Island_Boundary_Configurator`
 
