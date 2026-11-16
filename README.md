@@ -30,7 +30,7 @@ flowchart TB
 
 ## The process
 
-Let's say you had a legacy e-commerce application. It was written in spaghetti code and badly needed to be untangled.
+Let's say you have a legacy e-commerce application. It's currently spaghetti code and badly needs to be untangled.
 
 Once Archipelago is installed, you would start by identifying areas of your codebase that could be extracted into islands. An island need not be large at this point, 2 or 3 lines of extracted code would do. If you see the same code repeated in several places in the spaghetti, that would also be a good candidate. You don't need to have a plan yet, in fact you shouldn't. But you do need to remember the golden rule: **no island may ever send messages to another island**.
 
@@ -51,9 +51,9 @@ Let's say that after some time, you ended up with the following islands:
 | `shipping_calculator`    | Calculates shipping costs.       |
 | `order_number_generator` | Generates unique order numbers.  |
 
-Since no island may ever send messages to another island, you likely would have found that a lot of those islands were using the legacy application to send messages to one another. That's okay. What that is telling you is that those inter-related concerns are likely part of larger domains. You're starting to rediscover the initial application logic lost in the spaghetti.
+Since no island may ever send messages to another island, you likely would have found that a lot of the islands you created were using the legacy application to send messages to one another. That's okay. What that is telling you is that those inter-related concerns are likely part of larger domains. You're starting to rediscover the initial application logic lost in the spaghetti.
 
-Now is that time to start thinking about replacing some of those smaller islands with larger islands. Let's say that were able to create the following replacements:
+The next step is to start thinking about replacing some of those smaller islands with larger islands. Let's say that were able to create the following replacements:
 
 | Island                  | Replaces                                                                           | Responsibility                              |
 |-------------------------|------------------------------------------------------------------------------------|---------------------------------------------|
