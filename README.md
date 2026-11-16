@@ -246,6 +246,59 @@ This prepares the environment the Island runs in, typically loading classes or r
 
 This is an optional component. If it is not used then no bootstrapping happens.
 
+## Island Configuration and Usage
+
+Islands are configured by a class implementing the `Archipelago_Island` class.
+
+```php
+interface Archipelago_Island
+{
+    /**
+     * @return string
+     */
+    public function getName();
+
+    /**
+     * @return Archipelago_Island_Inner_Ingress
+     */
+    public function getIngress();
+
+    /**
+     * @return Archipelago_Island_Boundary_Bootstrapper|null
+     */
+    public function getBootstrapper();
+
+    /**
+     * @return Archipelago_Island_Boundary_Configurator|null
+     */
+    public function getConfigurator();
+
+    /**
+     * @return Archipelago_Island_Boundary_Adapter|null
+     */
+    public function getAdapter();
+}
+```
+
+The `getBootstrapper`, `getConfigurator`, and `getAdapter` methods may return null if any/all are not needed. The must return an Ingress class. Each universe must have a unique name which is used then registering it, and running it with a request.
+
+The name must:
+- not be empty.
+- start with a lowercase letter.
+- contain only lowercase letters, numbers, dots, and underscores.
+
+Universes are registered like this:
+
+```php
+Archipelago::register($universe);
+```
+
+Universes are run like this:
+
+```php
+$outerResponse = Archipelago::run('island.name', $outerRequest);
+```
+
 ## Installation
 
 Archipelago can be installed in one of two ways:
