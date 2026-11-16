@@ -32,7 +32,7 @@ flowchart TB
 
 Let's say you have a legacy e-commerce application. It's currently spaghetti code and badly needs to be untangled.
 
-Once Archipelago is installed, you would start by identifying areas of your codebase that could be extracted into islands. An island need not be large at this point; 2 or 3 lines of extracted code would do. If you see the same code repeated in several places in the spaghetti, that would also be a good candidate. You don't need to have a plan yet, in fact you shouldn't. But you do need to remember the golden rule: **no island may ever send messages to another island**.
+Once Archipelago is installed, you would start by identifying areas of your codebase that could be extracted into islands. An island need not be large at this point, 2 or 3 lines of extracted code would do. If you see the same code repeated in several places in the spaghetti, that would also be a good candidate. You don't need to have a plan yet, in fact you shouldn't. But you do need to remember the golden rule: **no island may ever send messages to another island**.
 
 Let's say that after some time, you ended up with the following islands:
 
@@ -92,21 +92,19 @@ An island is composed of three logical areas: Inner, Outer, and Boundary. Each h
 
 The Inner contains the actual logic extracted from the legacy application.
 
-It is deliberately isolated from the rest of the codebase. It must not reference classes or contain objects defined outside the Inner.
-
-This restriction ensures that the implementation can evolve independently of the legacy application and other islands.
+It must not reference classes or contain objects defined outside the Inner.
 
 ### Outer
 
 The Outer provides the integration point between the island and the surrounding application.
 
-It may reference classes and objects belonging to the wider application, but must not reference anything from the Inner or from another island.
+It must not reference classes or contain objects defined inside the Inner, or defined in other Islands.
 
 ### Boundary
 
 The Boundary connects the Inner and the Outer.
 
-It is allowed to reference classes and objects in the Inner, the Outer and the legacy application, but never anything from other islands.
+It may not reference classes or contain objects defined inside other islands, but otherwise has no restrictions.
 
 ## Installation
 
