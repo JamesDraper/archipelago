@@ -218,9 +218,9 @@ interface Archipelago_Island_Boundary_Configurator
 }
 ```
 
-This is called once, the first time the island is run before the request is passed into the ingress. The Island Ingress is passed into it and any configuration/dependencies that the island may have can be injected via setters.
+This is called once, the first time the island is run before the request is passed into the Ingress. The Island Ingress is passed into it and any configuration/dependencies that the island may have can be injected via setters.
 
-This is an optional component. If it is not used then the ingress will not be configured.
+This is an optional component. If it is not used then the Ingress will not be configured.
 
 #### `Archipelago_Island_Boundary_Bootstrapper`
 
