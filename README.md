@@ -126,6 +126,6 @@ Alternatively, copy the `archipelago` directory into your project in a location 
 
 Then include the bootstrap file:
 
-```bash
+```php
 require '/path/to/archipelago/bootstrap.php';
 ```
