@@ -106,6 +106,48 @@ The Boundary connects the Inner and the Outer.
 
 It may not reference classes or contain objects defined inside other Islands, but otherwise has no restrictions.
 
+```mermaid
+flowchart TB
+    LEGACY["Legacy Application"]
+
+    subgraph ISLAND["Island"]
+        direction LR
+
+        subgraph INNER["Inner"]
+            direction LR
+
+            INNER_REQUEST["Inner Request"]
+            INGRESS["Ingress"]
+            INNER_RESPONSE["Inner Response"]
+
+            INNER_REQUEST --> INGRESS
+            INGRESS --> INNER_RESPONSE
+        end
+
+        subgraph BOUNDARY["Boundary"]
+            direction LR
+
+            ADAPTER["Adapter"]
+        end
+
+        subgraph OUTER["Outer"]
+            direction LR
+
+            OUTER_REQUEST["Outer Request"]
+            OUTER_RESPONSE["Outer Response"]
+        end
+    end
+
+    LEGACY --> OUTER_REQUEST
+    OUTER_RESPONSE --> LEGACY
+
+    OUTER_REQUEST --> ADAPTER
+    ADAPTER --> INNER_REQUEST
+
+    INNER_RESPONSE --> ADAPTER
+    ADAPTER --> OUTER_RESPONSE
+```
+
 ## Installation
 
 Archipelago can be installed in one of two ways:
