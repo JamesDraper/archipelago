@@ -5,8 +5,6 @@ namespace Tests\TypeFormatter;
 
 use Archipelago_Internal_TypeFormatter;
 
-use Tests\TypeFormatter\Fixtures\SimpleBackedEnum;
-use Tests\TypeFormatter\Fixtures\SimpleEnum;
 use Tests\TestCase;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -69,11 +67,11 @@ final class TypeFormatterTest extends TestCase
                 'value' => [1, 2, 3],
             ],
             'enum' => [
-                'expected' => 'enum(Tests\\TypeFormatter\\Fixtures\\SimpleEnum)',
+                'expected' => 'enum(Tests\\TypeFormatter\\SimpleEnum)',
                 'value' => SimpleEnum::ONE,
             ],
             'backed enum' => [
-                'expected' => 'enum(Tests\\TypeFormatter\\Fixtures\\SimpleBackedEnum)',
+                'expected' => 'enum(Tests\\TypeFormatter\\SimpleBackedEnum)',
                 'value' => SimpleBackedEnum::ONE,
             ],
         ];
