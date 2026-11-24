@@ -6,7 +6,7 @@ namespace Tests\Unit\Boundary;
 use Archipelago_Internal_Boundary_NullBootstrapper;
 use Archipelago_Island_Boundary_Bootstrapper;
 
-use Tests\TestCase;
+use Tests\Unit\TestCase;
 
 use PHPUnit\Framework\Attributes\Test;
 

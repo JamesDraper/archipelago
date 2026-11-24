@@ -16,7 +16,7 @@ use Archipelago_Island_Inner_Ingress;
 use Archipelago_BadValueException;
 use Archipelago_Island;
 
-use Tests\TestCase;
+use Tests\Unit\TestCase;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;

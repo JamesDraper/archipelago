@@ -15,7 +15,6 @@ use Archipelago_Island_Inner_Ingress;
 use Archipelago_Internal_Island;
 use Archipelago_Island;
 
-use Tests\TestCase;
 
 use PHPUnit\Framework\Attributes\Test;
 

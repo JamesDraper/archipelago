@@ -10,7 +10,7 @@ use Archipelago_Island_Inner_Request;
 use Archipelago_TypeException;
 use Archipelago_Island;
 
-use Tests\TestCase;
+use Tests\Unit\TestCase;
 
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\DataProvider;

@@ -11,7 +11,7 @@ use Archipelago_Island_Inner_Request;
 use Archipelago_Island_Outer_Request;
 use Archipelago_TypeException;
 
-use Tests\TestCase;
+use Tests\Unit\TestCase;
 
 use PHPUnit\Framework\Attributes\Test;
 

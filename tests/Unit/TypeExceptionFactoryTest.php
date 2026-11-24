@@ -6,7 +6,6 @@ namespace Tests\Unit;
 use Archipelago_Internal_TypeExceptionFactory;
 use Archipelago_TypeException;
 
-use Tests\TestCase;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
