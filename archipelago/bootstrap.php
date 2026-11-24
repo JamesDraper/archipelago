@@ -39,6 +39,11 @@ require dirname(__FILE__) . '/src/Archipelago/Internal/Invoker.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/Island.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/IslandFactory.php';
 
+// Registries
+require dirname(__FILE__) . '/src/Archipelago/Internal/Registry/Registry.php';
+require dirname(__FILE__) . '/src/Archipelago/Internal/Registry/ActivatedIslandRegistry.php';
+require dirname(__FILE__) . '/src/Archipelago/Internal/Registry/UnactivatedIslandRegistry.php';
+
 // Validators
 require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/AdapterValidator.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/Validator/BootstrapperValidator.php';
