@@ -6,17 +6,17 @@
 class Archipelago_Internal_Root
 {
     /**
-     * @return self|null
+     * @var self|null
      */
     private static $instance = null;
 
     /**
-     * @var Archipelago_Internal_Registry
+     * @var Archipelago_Internal_Registry<Archipelago_Internal_Island>
      */
     private $unactivatedRegistry;
 
     /**
-     * @var Archipelago_Internal_Registry
+     * @var Archipelago_Internal_Registry<Archipelago_Internal_Island>
      */
     private $activatedRegistry;
 
@@ -52,8 +52,8 @@ class Archipelago_Internal_Root
             $islandFactory = new Archipelago_Internal_IslandFactory($validator);
 
             self::$instance = new self(
-                new Archipelago_Internal_Registry(),
-                new Archipelago_Internal_Registry(),
+                new Archipelago_Internal_IslandRegistry(),
+                new Archipelago_Internal_IslandRegistry(),
                 $islandFactory,
                 $invoker
             );
@@ -62,6 +62,10 @@ class Archipelago_Internal_Root
         return self::$instance;
     }
 
+    /**
+     * @param Archipelago_Internal_Registry<Archipelago_Internal_Island> $unactivatedRegistry
+     * @param Archipelago_Internal_Registry<Archipelago_Internal_Island> $activatedRegistry
+     */
     public function __construct(
         Archipelago_Internal_Registry $unactivatedRegistry,
         Archipelago_Internal_Registry $activatedRegistry,
