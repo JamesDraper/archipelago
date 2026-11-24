@@ -1,6 +1,6 @@
 <?php
 
-define('ARCHIPELAGO_TESTS_MIN_PHP_VERSION', '8.4.1');
+define('ARCHIPELAGO_TESTS_MIN_PHP_VERSION', '8.5.1');
 
 if (version_compare(PHP_VERSION, ARCHIPELAGO_TESTS_MIN_PHP_VERSION, '<')) {
     echo sprintf(
