@@ -85,6 +85,19 @@ class Archipelago_Internal_ExceptionFactory_TypeExceptionFactory
     }
 
     /**
+     * @param string $message
+     * @return Archipelago_TypeException
+     */
+    public function make(string $message)
+    {
+        require_once dirname(__FILE__) . '/../../Exception.php';
+        require_once dirname(__FILE__) . '/../../BadValueException.php';
+        require_once dirname(__FILE__) . '/../../TypeException.php';
+
+        return new Archipelago_TypeException($message);
+    }
+
+    /**
      * @param object|string $pathOrObject
      * @param string $method
      * @param int $position
@@ -94,7 +107,7 @@ class Archipelago_Internal_ExceptionFactory_TypeExceptionFactory
      */
     private function makeArgument($pathOrObject, $method, $position, $expectedExpression, $value)
     {
-        $type = Archipelago_Internal_TypeFormatter::format($value);
+        $type = $this->formatType($value);
 
         $message = sprintf('argument %d should be %s, got %s', $position, $expectedExpression, $type);
 
@@ -110,11 +123,22 @@ class Archipelago_Internal_ExceptionFactory_TypeExceptionFactory
      */
     private function makeReturn($pathOrObject, $method, $expectedExpression, $value)
     {
-        $type = Archipelago_Internal_TypeFormatter::format($value);
+        $type = $this->formatType($value);
 
         $message = sprintf('should return %s, got %s', $expectedExpression, $type);
 
         return $this->makeException($pathOrObject, $method, $message);
+    }
+
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    private function formatType($value)
+    {
+        require_once dirname(__FILE__) . '/../TypeFormatter.php';
+
+        return Archipelago_Internal_TypeFormatter::format($value);
     }
 
     /**
@@ -157,16 +181,12 @@ class Archipelago_Internal_ExceptionFactory_TypeExceptionFactory
      */
     private function makeException($pathOrObject, $method, $message)
     {
-        require_once dirname(__FILE__) . '/../../Exception.php';
-        require_once dirname(__FILE__) . '/../../BadValueException.php';
-        require_once dirname(__FILE__) . '/../../TypeException.php';
-
         $class = is_object($pathOrObject)
             ? get_class($pathOrObject)
             : $pathOrObject;
 
         $message = sprintf('%s::%s() %s.', $class, $method, $message);
 
-        return new Archipelago_TypeException($message);
+        return $this->make($message);
     }
 }

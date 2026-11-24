@@ -71,6 +71,8 @@ class Archipelago_Internal_IslandFactory
      */
     public function make(Archipelago_Island $island)
     {
+        require_once dirname(__FILE__) . '/Island.php';
+
         $name = $island->getName();
         $ingress = $island->getIngress();
         $bootstrapper = $island->getBootstrapper();

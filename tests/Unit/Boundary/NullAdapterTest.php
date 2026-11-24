@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Boundary;
 
+use Archipelago_Internal_ExceptionFactory_TypeExceptionFactory;
 use Archipelago_Internal_Boundary_NullAdapter;
 use Archipelago_Island_Boundary_Adapter;
 use Archipelago_Island_Inner_Response;
@@ -15,10 +16,13 @@ use Tests\Unit\TestCase;
 
 use PHPUnit\Framework\Attributes\Test;
 
+use Mockery\MockInterface;
 use Mockery;
 
 final class NullAdapterTest extends TestCase
 {
+    private Archipelago_Internal_ExceptionFactory_TypeExceptionFactory&MockInterface $typeExceptionFactory;
+
     private Archipelago_Internal_Boundary_NullAdapter $adapter;
 
     #[Test]
@@ -40,14 +44,26 @@ final class NullAdapterTest extends TestCase
     public function it_throws_when_a_request_is_only_outer(): void
     {
         $request = Mockery::mock(Archipelago_Island_Outer_Request::class);
+        $exception = Mockery::mock(Archipelago_TypeException::class);
 
         $expectedMessage = get_class($request) . ' must implement both Archipelago_Island_Inner_Request and'
             . ' Archipelago_Island_Outer_Request when no adapter is used.';
 
-        $this->expectException(Archipelago_TypeException::class);
-        $this->expectExceptionMessage($expectedMessage);
+        $this
+            ->typeExceptionFactory
+            ->expects()
+            ->make($expectedMessage)
+            ->andReturn($exception);
 
-        $this->adapter->requestIn($request);
+        try {
+            $this->adapter->requestIn($request);
+        } catch (Archipelago_TypeException $thrown) {
+            $this->assertSame($exception, $thrown);
+
+            return;
+        }
+
+        $this->fail('Expected ' . Archipelago_TypeException::class . ' to be thrown.');
     }
 
     #[Test]
@@ -63,20 +79,34 @@ final class NullAdapterTest extends TestCase
     public function it_throws_when_a_response_is_only_inner(): void
     {
         $response = Mockery::mock(Archipelago_Island_Inner_Response::class);
+        $exception = Mockery::mock(Archipelago_TypeException::class);
 
         $expectedMessage = get_class($response) . ' must implement both Archipelago_Island_Inner_Response and'
             . ' Archipelago_Island_Outer_Response when no adapter is used.';
 
-        $this->expectException(Archipelago_TypeException::class);
-        $this->expectExceptionMessage($expectedMessage);
+        $this
+            ->typeExceptionFactory
+            ->expects()
+            ->make($expectedMessage)
+            ->andReturn($exception);
 
-        $this->adapter->responseOut($response);
+        try {
+            $this->adapter->responseOut($response);
+        } catch (Archipelago_TypeException $thrown) {
+            $this->assertSame($exception, $thrown);
+
+            return;
+        }
+
+        $this->fail('Expected ' . Archipelago_TypeException::class . ' to be thrown.');
     }
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->adapter = new Archipelago_Internal_Boundary_NullAdapter();
+        $this->typeExceptionFactory = Mockery::mock(Archipelago_Internal_ExceptionFactory_TypeExceptionFactory::class);
+
+        $this->adapter = new Archipelago_Internal_Boundary_NullAdapter($this->typeExceptionFactory);
     }
 }

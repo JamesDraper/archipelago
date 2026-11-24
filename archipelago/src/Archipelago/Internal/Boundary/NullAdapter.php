@@ -11,15 +11,29 @@ class Archipelago_Internal_Boundary_NullAdapter implements Archipelago_Island_Bo
     private static $instance = null;
 
     /**
+     * @var Archipelago_Internal_ExceptionFactory_TypeExceptionFactory
+     */
+    private $typeExceptionFactory;
+
+    /**
      * @return self
      */
     public static function getInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new self();
+            require_once dirname(__FILE__) . '/../ExceptionFactory/TypeExceptionFactory.php';
+
+            $typeExceptionFactory = Archipelago_Internal_ExceptionFactory_TypeExceptionFactory::getInstance();
+
+            self::$instance = new self($typeExceptionFactory);
         }
 
         return self::$instance;
+    }
+
+    public function __construct(Archipelago_Internal_ExceptionFactory_TypeExceptionFactory $typeExceptionFactory)
+    {
+        $this->typeExceptionFactory = $typeExceptionFactory;
     }
 
     public function requestIn(Archipelago_Island_Outer_Request $request)
@@ -63,6 +77,6 @@ class Archipelago_Internal_Boundary_NullAdapter implements Archipelago_Island_Bo
             $outerInterface
         );
 
-        return new Archipelago_TypeException($message);
+        return $this->typeExceptionFactory->make($message);
     }
 }
