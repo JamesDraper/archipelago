@@ -88,7 +88,7 @@ class Archipelago_Internal_ExceptionFactory_TypeExceptionFactory
      * @param string $message
      * @return Archipelago_TypeException
      */
-    public function make(string $message)
+    public function make($message)
     {
         require_once dirname(__FILE__) . '/../../Exception.php';
         require_once dirname(__FILE__) . '/../../BadValueException.php';

@@ -56,7 +56,7 @@ class Archipelago_Internal_IslandFactory
         Archipelago_Internal_Validator_Validator $validator,
         Archipelago_Internal_Boundary_NullBootstrapper $nullBootstrapper,
         Archipelago_Internal_Boundary_NullConfigurator $nullConfigurator,
-        Archipelago_Internal_Boundary_NullAdapter $nullAdapter,
+        Archipelago_Internal_Boundary_NullAdapter $nullAdapter
     ) {
         $this->validator = $validator;
         $this->nullBootstrapper = $nullBootstrapper;
