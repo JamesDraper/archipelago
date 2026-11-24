@@ -25,7 +25,8 @@
     "scripts": {
         "test": [
             "@phpunit",
-            "@phpstan"
+            "@phpstan",
+            "@php-cs-fixer"
         ],
         "phpunit": [
             "@phpunit.type-formatter",
@@ -41,6 +42,7 @@
             "@phpstan.test"
         ],
         "phpstan.src": "phpstan analyze -c phpstan.neon.src.dist",
-        "phpstan.test": "phpstan analyze -c phpstan.neon.test.dist"
+        "phpstan.test": "phpstan analyze -c phpstan.neon.test.dist",
+        "php-cs-fixer": "php-cs-fixer fix -v --diff --dry-run"
     }
 }
