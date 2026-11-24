@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory;
 use Archipelago_Island_Boundary_Bootstrapper;
 use Archipelago_Island_Boundary_Configurator;
 use Archipelago_Island_Boundary_Adapter;
@@ -33,6 +34,8 @@ final class RootTest extends TestCase
 
     private Archipelago_Internal_Registry&MockInterface $activatedRegistry;
 
+    private Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory&MockInterface $badValueExceptionFactory;
+
     private Archipelago_Internal_Root $root;
 
     #[Test]
@@ -60,9 +63,6 @@ final class RootTest extends TestCase
     #[Test]
     public function it_throws_when_registering_an_island_that_is_already_registered_unactivated(): void
     {
-        $this->expectException(Archipelago_BadValueException::class);
-        $this->expectExceptionMessage('Island already registered named "name".');
-
         $island = Mockery::mock(Archipelago_Island::class);
 
         $internalIsland = Mockery::mock(Archipelago_Internal_Island::class);
@@ -74,15 +74,15 @@ final class RootTest extends TestCase
 
         $this->unactivatedRegistry->allows()->has('name')->andReturn(true);
 
-        $this->root->register($island);
+        $this->assertThrowsFactoryException(
+            'Island already registered named "name".',
+            fn () => $this->root->register($island),
+        );
     }
 
     #[Test]
     public function it_throws_when_registering_an_island_that_is_already_registered_activated(): void
     {
-        $this->expectException(Archipelago_BadValueException::class);
-        $this->expectExceptionMessage('Island already registered named "name".');
-
         $island = Mockery::mock(Archipelago_Island::class);
 
         $internalIsland = Mockery::mock(Archipelago_Internal_Island::class);
@@ -92,9 +92,12 @@ final class RootTest extends TestCase
 
         $this->activatedRegistry->allows()->has('name')->andReturn(true);
 
-        $this->unactivatedRegistry->allows()->has('name')->andReturn(false);        
+        $this->unactivatedRegistry->allows()->has('name')->andReturn(false);
 
-        $this->root->register($island);
+        $this->assertThrowsFactoryException(
+            'Island already registered named "name".',
+            fn () => $this->root->register($island),
+        );
     }
 
     #[Test]
@@ -159,9 +162,6 @@ final class RootTest extends TestCase
     #[Test]
     public function it_throws_when_running_an_island_that_is_not_registered(): void
     {
-        $this->expectException(Archipelago_BadValueException::class);
-        $this->expectExceptionMessage('No island registered named "name".');
-
         $request = Mockery::mock(Archipelago_Island_Outer_Request::class);
 
         $this->activatedRegistry->expects()->has('name')->andReturn(false);
@@ -170,7 +170,10 @@ final class RootTest extends TestCase
 
         $this->invoker->shouldNotReceive('invoke');
 
-        $this->root->run('name', $request);
+        $this->assertThrowsFactoryException(
+            'No island registered named "name".',
+            fn () => $this->root->run('name', $request),
+        );
     }
 
     protected function setUp(): void
@@ -181,12 +184,34 @@ final class RootTest extends TestCase
         $this->islandFactory = Mockery::mock(Archipelago_Internal_IslandFactory::class);
         $this->unactivatedRegistry = Mockery::mock(Archipelago_Internal_Registry::class);
         $this->activatedRegistry = Mockery::mock(Archipelago_Internal_Registry::class);
+        $this->badValueExceptionFactory = Mockery::mock(Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory::class);
 
         $this->root = new Archipelago_Internal_Root(
             $this->unactivatedRegistry,
             $this->activatedRegistry,
             $this->islandFactory,
             $this->invoker,
+            $this->badValueExceptionFactory,
         );
+    }
+
+    private function assertThrowsFactoryException(string $message, callable $action): void
+    {
+        $exception = Mockery::mock(Archipelago_BadValueException::class);
+
+        $this->badValueExceptionFactory
+            ->expects()
+            ->makeException($message)
+            ->andReturn($exception);
+
+        try {
+            $action();
+        } catch (Archipelago_BadValueException $thrown) {
+            $this->assertSame($exception, $thrown);
+
+            return;
+        }
+
+        $this->fail('Expected ' . Archipelago_BadValueException::class . ' to be thrown.');
     }
 }

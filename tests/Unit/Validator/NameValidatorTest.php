@@ -5,6 +5,7 @@ namespace Tests\Unit\Validator;
 
 use Archipelago_Internal_Validator_NameValidator;
 use Archipelago_Internal_ExceptionFactory_TypeExceptionFactory;
+use Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory;
 use Archipelago_BadValueException;
 use Archipelago_TypeException;
 use Archipelago_Island;
@@ -23,6 +24,8 @@ use stdClass;
 final class NameValidatorTest extends TestCase
 {
     private Archipelago_Internal_ExceptionFactory_TypeExceptionFactory&MockInterface $typeExceptionFactory;
+
+    private Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory&MockInterface $badValueExceptionFactory;
 
     private Archipelago_Internal_Validator_NameValidator $validator;
 
@@ -80,10 +83,10 @@ final class NameValidatorTest extends TestCase
     #[Test]
     public function it_throws_when_the_name_is_empty(): void
     {
-        $this->expectException(Archipelago_BadValueException::class);
-        $this->expectExceptionMessage('Island name cannot be empty.');
-
-        $this->validator->assertNotEmpty('');
+        $this->assertThrowsBadValueFactoryException(
+            'Island name cannot be empty.',
+            fn () => $this->validator->assertNotEmpty(''),
+        );
     }
 
     #[Test]
@@ -116,10 +119,10 @@ final class NameValidatorTest extends TestCase
         $expectedMessage = 'Island name must be lowercase letters, numbers, underscores, and dots only.'
             . ' It must begin with a lowercase letter. Got "' . $name . '".';
 
-        $this->expectException(Archipelago_BadValueException::class);
-        $this->expectExceptionMessage($expectedMessage);
-
-        $this->validator->assertNameValid($name);
+        $this->assertThrowsBadValueFactoryException(
+            $expectedMessage,
+            fn () => $this->validator->assertNameValid($name),
+        );
     }
 
     /**
@@ -149,9 +152,31 @@ final class NameValidatorTest extends TestCase
         parent::setUp();
 
         $this->typeExceptionFactory = Mockery::mock(Archipelago_Internal_ExceptionFactory_TypeExceptionFactory::class);
+        $this->badValueExceptionFactory = Mockery::mock(Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory::class);
         $this->validator = new Archipelago_Internal_Validator_NameValidator(
             $this->typeExceptionFactory,
+            $this->badValueExceptionFactory,
         );
+    }
+
+    private function assertThrowsBadValueFactoryException(string $message, callable $action): void
+    {
+        $exception = Mockery::mock(Archipelago_BadValueException::class);
+
+        $this->badValueExceptionFactory
+            ->expects()
+            ->makeException($message)
+            ->andReturn($exception);
+
+        try {
+            $action();
+        } catch (Archipelago_BadValueException $thrown) {
+            $this->assertSame($exception, $thrown);
+
+            return;
+        }
+
+        $this->fail('Expected ' . Archipelago_BadValueException::class . ' to be thrown.');
     }
 
     private function assertThrowsFactoryException(Archipelago_Island $island, mixed $name): void

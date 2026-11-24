@@ -10,9 +10,17 @@ class Archipelago_Internal_Validator_NameValidator
      */
     private $typeExceptionFactory;
 
-    public function __construct(Archipelago_Internal_ExceptionFactory_TypeExceptionFactory $typeExceptionFactory)
-    {
+    /**
+     * @var Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory
+     */
+    private $badValueExceptionFactory;
+
+    public function __construct(
+        Archipelago_Internal_ExceptionFactory_TypeExceptionFactory $typeExceptionFactory,
+        Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory $badValueExceptionFactory
+    ) {
         $this->typeExceptionFactory = $typeExceptionFactory;
+        $this->badValueExceptionFactory = $badValueExceptionFactory;
     }
 
     /**
@@ -41,7 +49,7 @@ class Archipelago_Internal_Validator_NameValidator
     public function assertNotEmpty($name)
     {
         if ('' === $name) {
-            throw new Archipelago_BadValueException('Island name cannot be empty.');
+            throw $this->badValueExceptionFactory->makeException('Island name cannot be empty.');
         }
     }
 
@@ -56,7 +64,7 @@ class Archipelago_Internal_Validator_NameValidator
             $message = 'Island name must be lowercase letters, numbers, underscores, and dots only.'
                 . ' It must begin with a lowercase letter. Got "%s".';
 
-            throw new Archipelago_BadValueException(sprintf($message, $name));
+            throw $this->badValueExceptionFactory->makeException(sprintf($message, $name));
         }
     }
 }
