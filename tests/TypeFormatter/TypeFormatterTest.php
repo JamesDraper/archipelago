@@ -15,6 +15,7 @@ use function unserialize;
 use function get_class;
 use function sprintf;
 use function tmpfile;
+use function dirname;
 use function fclose;
 
 /**
@@ -127,5 +128,14 @@ final class TypeFormatterTest extends TestCase
         fclose($file);
 
         $this->assertSame('resource', Archipelago_Internal_TypeFormatter::format($file));
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (!class_exists(Archipelago_Internal_TypeFormatter::class, false)) {
+            require dirname(__DIR__, 2) . '/archipelago/src/Archipelago/Internal/TypeFormatter.php';
+        }
     }
 }
