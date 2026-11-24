@@ -5,6 +5,23 @@
  */
 class Archipelago_Internal_Boundary_NullAdapter implements Archipelago_Island_Boundary_Adapter
 {
+    /**
+     * @var self|null
+     */
+    private static $instance = null;
+
+    /**
+     * @return self
+     */
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
     public function requestIn(Archipelago_Island_Outer_Request $request)
     {
         if (!$request instanceof Archipelago_Island_Inner_Request) {
