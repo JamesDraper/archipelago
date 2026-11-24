@@ -6,6 +6,11 @@
 class Archipelago_Internal_IslandFactory
 {
     /**
+     * @var self|null
+     */
+    private static $instance = null;
+
+    /**
      * @var Archipelago_Internal_Validator_Validator
      */
     private $validator;
@@ -24,6 +29,28 @@ class Archipelago_Internal_IslandFactory
      * @var Archipelago_Internal_Boundary_NullAdapter
      */
     private $nullAdapter;
+
+    /**
+     * @return self
+     */
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            require_once dirname(__FILE__) . '/Validator/Validator.php';
+            require_once dirname(__FILE__) . '/Boundary/NullBootstrapper.php';
+            require_once dirname(__FILE__) . '/Boundary/NullConfigurator.php';
+            require_once dirname(__FILE__) . '/Boundary/NullAdapter.php';
+
+            $validator = Archipelago_Internal_Validator_Validator::getInstance();
+            $nullBootstrapper = Archipelago_Internal_Boundary_NullBootstrapper::getInstance();
+            $nullConfigurator = Archipelago_Internal_Boundary_NullConfigurator::getInstance();
+            $nullAdapter = Archipelago_Internal_Boundary_NullAdapter::getInstance();
+
+            self::$instance = new self($validator, $nullBootstrapper, $nullConfigurator, $nullAdapter);
+        }
+
+        return self::$instance;
+    }
 
     public function __construct(
         Archipelago_Internal_Validator_Validator $validator,
