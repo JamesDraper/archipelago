@@ -4,10 +4,6 @@ parameters:
         - archipelago
         - tests
 
-    excludePaths:
-        analyse:
-            - archipelago/src/Archipelago/Internal/Root.php # Todo: Remove once file is complete.
-
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-mockery/extension.neon
