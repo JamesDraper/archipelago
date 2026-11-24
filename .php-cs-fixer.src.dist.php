@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$finder = (new PhpCsFixer\Finder())->in(__DIR__); 
+$finder = (new PhpCsFixer\Finder())->in(__DIR__ . '/archipelago');
 
 $rules = [
     '@auto' => true,
@@ -14,6 +14,7 @@ $rules = [
 ];
 
 return (new PhpCsFixer\Config())
+    ->setCacheFile(__DIR__ . '/.php-cs-fixer.src.cache')
     ->setRiskyAllowed(true)
     ->setFinder($finder)
     ->setRules($rules);

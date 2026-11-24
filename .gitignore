@@ -2,8 +2,10 @@
 /vendor/*
 
 /.phpunit.result.cache
-/.php-cs-fixer.cache
-/.php-cs-fixer.php
+/.php-cs-fixer.src.cache
+/.php-cs-fixer.test.cache
+/.php-cs-fixer.src.php
+/.php-cs-fixer.test.php
 /composer.lock
 /phpstan.neon.src
 /phpstan.neon.test
