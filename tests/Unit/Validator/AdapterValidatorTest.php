@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Validator;
 
 use Archipelago_Internal_Validator_AdapterValidator;
-use Archipelago_Internal_TypeExceptionFactory;
+use Archipelago_Internal_ExceptionFactory_TypeExceptionFactory;
 use Archipelago_Island_Boundary_Adapter;
 use Archipelago_TypeException;
 use Archipelago_Island;
@@ -22,7 +22,7 @@ use stdClass;
 
 final class AdapterValidatorTest extends TestCase
 {
-    private Archipelago_Internal_TypeExceptionFactory&MockInterface $typeExceptionFactory;
+    private Archipelago_Internal_ExceptionFactory_TypeExceptionFactory&MockInterface $typeExceptionFactory;
 
     private Archipelago_Internal_Validator_AdapterValidator $validator;
 
@@ -85,7 +85,7 @@ final class AdapterValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->typeExceptionFactory = Mockery::mock(Archipelago_Internal_TypeExceptionFactory::class);
+        $this->typeExceptionFactory = Mockery::mock(Archipelago_Internal_ExceptionFactory_TypeExceptionFactory::class);
         $this->validator = new Archipelago_Internal_Validator_AdapterValidator(
             $this->typeExceptionFactory,
         );

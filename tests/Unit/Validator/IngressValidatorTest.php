@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Validator;
 
 use Archipelago_Internal_Validator_IngressValidator;
-use Archipelago_Internal_TypeExceptionFactory;
+use Archipelago_Internal_ExceptionFactory_TypeExceptionFactory;
 use Archipelago_Island_Inner_Ingress;
 use Archipelago_Island_Inner_Request;
 use Archipelago_TypeException;
@@ -23,7 +23,7 @@ use stdClass;
 
 final class IngressValidatorTest extends TestCase
 {
-    private Archipelago_Internal_TypeExceptionFactory&MockInterface $typeExceptionFactory;
+    private Archipelago_Internal_ExceptionFactory_TypeExceptionFactory&MockInterface $typeExceptionFactory;
 
     private Archipelago_Internal_Validator_IngressValidator $validator;
 
@@ -75,7 +75,7 @@ final class IngressValidatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->typeExceptionFactory = Mockery::mock(Archipelago_Internal_TypeExceptionFactory::class);
+        $this->typeExceptionFactory = Mockery::mock(Archipelago_Internal_ExceptionFactory_TypeExceptionFactory::class);
         $this->validator = new Archipelago_Internal_Validator_IngressValidator(
             $this->typeExceptionFactory,
         );

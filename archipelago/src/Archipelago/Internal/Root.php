@@ -36,7 +36,7 @@ class Archipelago_Internal_Root
     public static function getInstance()
     {
         if (self::$instance === null) {
-            $typeExceptionFactory = new Archipelago_Internal_TypeExceptionFactory();
+            $typeExceptionFactory = new Archipelago_Internal_ExceptionFactory_TypeExceptionFactory();
             $invoker = new Archipelago_Internal_Invoker($typeExceptionFactory);
 
             $validator = new Archipelago_Internal_Validator_Validator(

@@ -6,11 +6,11 @@
 class Archipelago_Internal_Validator_AdapterValidator
 {
     /**
-     * @var Archipelago_Internal_TypeExceptionFactory
+     * @var Archipelago_Internal_ExceptionFactory_TypeExceptionFactory
      */
     private $typeExceptionFactory;
 
-    public function __construct(Archipelago_Internal_TypeExceptionFactory $typeExceptionFactory)
+    public function __construct(Archipelago_Internal_ExceptionFactory_TypeExceptionFactory $typeExceptionFactory)
     {
         $this->typeExceptionFactory = $typeExceptionFactory;
     }

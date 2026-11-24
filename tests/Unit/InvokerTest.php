@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use Archipelago_Internal_TypeExceptionFactory;
+use Archipelago_Internal_ExceptionFactory_TypeExceptionFactory;
 use Archipelago_Island_Boundary_Adapter;
 use Archipelago_Island_Outer_Response;
 use Archipelago_Island_Inner_Response;
@@ -21,7 +21,7 @@ use Mockery;
 
 final class InvokerTest extends TestCase
 {
-    private Archipelago_Internal_TypeExceptionFactory&MockInterface $typeExceptionFactory;
+    private Archipelago_Internal_ExceptionFactory_TypeExceptionFactory&MockInterface $typeExceptionFactory;
 
     private Archipelago_Internal_Invoker $invoker;
 
@@ -163,7 +163,7 @@ final class InvokerTest extends TestCase
     {
         parent::setUp();
 
-        $this->typeExceptionFactory = Mockery::mock(Archipelago_Internal_TypeExceptionFactory::class);
+        $this->typeExceptionFactory = Mockery::mock(Archipelago_Internal_ExceptionFactory_TypeExceptionFactory::class);
 
         $this->invoker = new Archipelago_Internal_Invoker($this->typeExceptionFactory);
     }

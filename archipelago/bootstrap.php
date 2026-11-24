@@ -33,7 +33,7 @@ require dirname(__FILE__) . '/src/Archipelago/Internal/Boundary/NullAdapter.php'
 // Internals
 require dirname(__FILE__) . '/src/Archipelago/Internal/Root.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/TypeFormatter.php';
-require dirname(__FILE__) . '/src/Archipelago/Internal/TypeExceptionFactory.php';
+require dirname(__FILE__) . '/src/Archipelago/Internal/ExceptionFactory/TypeExceptionFactory.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/Invoker.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/Island.php';
 require dirname(__FILE__) . '/src/Archipelago/Internal/IslandFactory.php';
