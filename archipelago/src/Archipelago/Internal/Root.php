@@ -11,12 +11,17 @@ class Archipelago_Internal_Root
     private static $instance = null;
 
     /**
-     * @var Archipelago_Internal_Registry
+     * @var Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory
+     */
+    private $badValueExceptionFactory;
+
+    /**
+     * @var Archipelago_Internal_Registry_UnactivatedIslandRegistry
      */
     private $unactivatedRegistry;
 
     /**
-     * @var Archipelago_Internal_Registry
+     * @var Archipelago_Internal_Registry_ActivatedIslandRegistry
      */
     private $activatedRegistry;
 
@@ -31,38 +36,29 @@ class Archipelago_Internal_Root
     private $invoker;
 
     /**
-     * @var Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory
-     */
-    private $badValueExceptionFactory;
-
-    /**
      * @return self
      */
     public static function getInstance()
     {
         if (self::$instance === null) {
-            $typeExceptionFactory = new Archipelago_Internal_ExceptionFactory_TypeExceptionFactory();
-            $badValueExceptionFactory = new Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory();
-            $invoker = new Archipelago_Internal_Invoker($typeExceptionFactory);
+            require_once dirname(__FILE__) . '/ExceptionFactory/BadValueExceptionFactory.php';
+            require_once dirname(__FILE__) . '/Registry/UnactivatedIslandRegistry.php';
+            require_once dirname(__FILE__) . '/Registry/ActivatedIslandRegistry.php';
+            require_once dirname(__FILE__) . '/IslandFactory.php';
+            require_once dirname(__FILE__) . '/Invoker.php';
 
-            $validator = new Archipelago_Internal_Validator_Validator(
-                new Archipelago_Internal_Validator_NameValidator($typeExceptionFactory, $badValueExceptionFactory),
-                new Archipelago_Internal_Validator_IngressValidator($typeExceptionFactory),
-                new Archipelago_Internal_Validator_BootstrapperValidator($typeExceptionFactory),
-                new Archipelago_Internal_Validator_ConfiguratorValidator($typeExceptionFactory),
-                new Archipelago_Internal_Validator_AdapterValidator($typeExceptionFactory)
-            );
-
-            $invoker = new Archipelago_Internal_Invoker($typeExceptionFactory);
-
-            $islandFactory = new Archipelago_Internal_IslandFactory($validator);
+            $badValueExceptionFactory = Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory::getInstance();
+            $unactivatedIslandRegistry = Archipelago_Internal_Registry_UnactivatedIslandRegistry::getInstance();
+            $activatedIslandRegistry = Archipelago_Internal_Registry_ActivatedIslandRegistry::getInstance();
+            $islandFactory = Archipelago_Internal_IslandFactory::getInstance();
+            $invoker = Archipelago_Internal_Invoker::getInstance();
 
             self::$instance = new self(
-                new Archipelago_Internal_Registry(),
-                new Archipelago_Internal_Registry(),
+                $badValueExceptionFactory,
+                $unactivatedIslandRegistry,
+                $activatedIslandRegistry,
                 $islandFactory,
-                $invoker,
-                $badValueExceptionFactory
+                $invoker
             );
         }
 
@@ -70,34 +66,50 @@ class Archipelago_Internal_Root
     }
 
     public function __construct(
-        Archipelago_Internal_Registry $unactivatedRegistry,
-        Archipelago_Internal_Registry $activatedRegistry,
+        Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory $badValueExceptionFactory,
+        Archipelago_Internal_Registry_UnactivatedIslandRegistry $unactivatedRegistry,
+        Archipelago_Internal_Registry_ActivatedIslandRegistry $activatedRegistry,
         Archipelago_Internal_IslandFactory $islandFactory,
-        Archipelago_Internal_Invoker $invoker,
-        Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory $badValueExceptionFactory
+        Archipelago_Internal_Invoker $invoker
     ) {
+        $this->badValueExceptionFactory = $badValueExceptionFactory;
         $this->unactivatedRegistry = $unactivatedRegistry;
         $this->activatedRegistry = $activatedRegistry;
         $this->islandFactory = $islandFactory;
         $this->invoker = $invoker;
-        $this->badValueExceptionFactory = $badValueExceptionFactory;
     }
 
     /**
-     * @param string $island
+     * @param string $name
      * @return Archipelago_Island_Outer_Response
      * @throws Archipelago_BadValueException
      * @throws Archipelago_TypeException
      */
-    public function run($island, Archipelago_Island_Outer_Request $request)
+    public function run($name, Archipelago_Island_Outer_Request $request)
     {
-        $internalIsland = $this->getIsland($island);
+        $unactivatedIsland = $this->unactivatedRegistry->get($name);
 
-        if (null === $internalIsland) {
-            throw $this->badValueExceptionFactory->makeException(sprintf('No island registered named "%s".', $island));
+        if (!is_null($unactivatedIsland)) {
+            $this->activatedRegistry->add($unactivatedIsland);
+            $this->unactivatedRegistry->remove($name);
+
+            $activatedIsland = $unactivatedIsland;
+        } else {
+            $activatedIsland = $this->activatedRegistry->get($name);
+
+            if (is_null($activatedIsland)) {
+                throw $this->badValueExceptionFactory->makeException(sprintf(
+                    'No island registered named "%s".',
+                    $name
+                ));
+            }
         }
 
-        return $this->invoker->invoke($internalIsland->getAdapter(), $internalIsland->getIngress(), $request);
+        return $this->invoker->invoke(
+            $activatedIsland->getAdapter(),
+            $activatedIsland->getIngress(),
+            $request
+        );
     }
 
     /**
@@ -110,50 +122,13 @@ class Archipelago_Internal_Root
         $internalIsland = $this->islandFactory->make($island);
         $name = $internalIsland->getName();
 
-        if ($this->unactivatedRegistry->has($name) || $this->activatedRegistry->has($name)) {
-            throw $this->badValueExceptionFactory->makeException(sprintf('Island already registered named "%s".', $name));
+        if (!is_null($this->unactivatedRegistry->get($name)) || !is_null($this->activatedRegistry->get($name))) {
+            throw $this->badValueExceptionFactory->makeException(sprintf(
+                'Island already registered named "%s".',
+                $name
+            ));
         }
 
-        $internalIsland->getBootstrapper()->onRegister();
-
-        $this->unactivatedRegistry->set($name, $internalIsland);
-    }
-
-    /**
-     * @param string $name
-     * @return Archipelago_Internal_Island|null
-     */
-    private function getIsland($name)
-    {
-        if ($this->unactivatedRegistry->has($name)) {
-            return $this->activateIsland($name);
-        }
-
-        if ($this->activatedRegistry->has($name)) {
-            return $this->activatedRegistry->get($name);
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $name
-     * @return Archipelago_Internal_Island
-     */
-    private function activateIsland($name)
-    {
-        $internalIsland = $this->unactivatedRegistry->get($name);
-
-        $internalIsland->getBootstrapper()->onFirstRun();
-
-        $configurator = $internalIsland->getConfigurator();
-        $ingress = $internalIsland->getIngress();
-
-        $configurator->configure($ingress);
-
-        $this->activatedRegistry->set($name, $internalIsland);
-        $this->unactivatedRegistry->remove($name);
-
-        return $internalIsland;
+        $this->unactivatedRegistry->add($internalIsland);
     }
 }
