@@ -3,5 +3,6 @@
 
 /.phpunit.result.cache
 /composer.lock
-/phpstan.neon
+/phpstan.neon.src
+/phpstan.neon.test
 /phpunit.xml

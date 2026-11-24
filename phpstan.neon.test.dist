@@ -1,8 +1,11 @@
 parameters:
     level: max
+    phpVersion: 80400
     paths:
-        - archipelago
         - tests
+
+    scanDirectories:
+        - archipelago
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon

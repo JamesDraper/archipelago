@@ -35,6 +35,11 @@
         "phpunit.type-formatter": "phpunit --testsuite=type-formatter",
         "phpunit.unit": "phpunit --testsuite=unit",
         "phpunit.integration": "phpunit --testsuite=integration",
-        "phpstan": "phpstan analyze"
+        "phpstan": [
+            "@phpstan.src",
+            "@phpstan.test"
+        ],
+        "phpstan.src": "phpstan analyze -c phpstan.neon.src.dist",
+        "phpstan.test": "phpstan analyze -c phpstan.neon.test.dist"
     }
 }
