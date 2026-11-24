@@ -17,7 +17,7 @@ final class BadValueExceptionFactoryTest extends TestCase
     #[Test]
     public function it_makes_an_exception(): void
     {
-        $exception = $this->factory->makeException('Some message.');
+        $exception = $this->factory->make('Some message.');
 
         $this->assertInstanceOf(Archipelago_BadValueException::class, $exception);
         $this->assertSame('Some message.', $exception->getMessage());

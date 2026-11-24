@@ -99,7 +99,7 @@ class Archipelago_Internal_Root
             $activatedIsland = $this->activatedRegistry->get($name);
 
             if (is_null($activatedIsland)) {
-                throw $this->badValueExceptionFactory->makeException(sprintf(
+                throw $this->badValueExceptionFactory->make(sprintf(
                     'No island registered named "%s".',
                     $name
                 ));
@@ -124,7 +124,7 @@ class Archipelago_Internal_Root
         $name = $internalIsland->getName();
 
         if (!is_null($this->unactivatedRegistry->get($name)) || !is_null($this->activatedRegistry->get($name))) {
-            throw $this->badValueExceptionFactory->makeException(sprintf(
+            throw $this->badValueExceptionFactory->make(sprintf(
                 'Island already registered named "%s".',
                 $name
             ));

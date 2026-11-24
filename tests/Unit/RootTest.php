@@ -277,7 +277,7 @@ final class RootTest extends TestCase
 
         $this->badValueExceptionFactory
             ->expects()
-            ->makeException($message)
+            ->make($message)
             ->andReturn($exception);
 
         try {

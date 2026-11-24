@@ -72,7 +72,7 @@ class Archipelago_Internal_Validator_NameValidator
     public function assertNotEmpty($name)
     {
         if ('' === $name) {
-            throw $this->badValueExceptionFactory->makeException('Island name cannot be empty.');
+            throw $this->badValueExceptionFactory->make('Island name cannot be empty.');
         }
     }
 
@@ -87,7 +87,7 @@ class Archipelago_Internal_Validator_NameValidator
             $message = 'Island name must be lowercase letters, numbers, underscores, and dots only.'
                 . ' It must begin with a lowercase letter. Got "%s".';
 
-            throw $this->badValueExceptionFactory->makeException(sprintf($message, $name));
+            throw $this->badValueExceptionFactory->make(sprintf($message, $name));
         }
     }
 }
