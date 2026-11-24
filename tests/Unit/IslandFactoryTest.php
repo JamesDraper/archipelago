@@ -25,6 +25,12 @@ final class IslandFactoryTest extends TestCase
 {
     private Archipelago_Internal_Validator_Validator&MockInterface $validator;
 
+    private Archipelago_Internal_Boundary_NullBootstrapper&MockInterface $nullBootstrapper;
+
+    private Archipelago_Internal_Boundary_NullConfigurator&MockInterface $nullConfigurator;
+
+    private Archipelago_Internal_Boundary_NullAdapter&MockInterface $nullAdapter;
+
     private Archipelago_Internal_IslandFactory $factory;
 
     #[Test]
@@ -68,7 +74,7 @@ final class IslandFactoryTest extends TestCase
 
         $internalIsland = $this->factory->make($island);
 
-        $this->assertInstanceOf(Archipelago_Internal_Boundary_NullBootstrapper::class, $internalIsland->getBootstrapper());
+        $this->assertSame($this->nullBootstrapper, $internalIsland->getBootstrapper());
     }
 
     #[Test]
@@ -87,7 +93,7 @@ final class IslandFactoryTest extends TestCase
 
         $internalIsland = $this->factory->make($island);
 
-        $this->assertInstanceOf(Archipelago_Internal_Boundary_NullConfigurator::class, $internalIsland->getConfigurator());
+        $this->assertSame($this->nullConfigurator, $internalIsland->getConfigurator());
     }
 
     #[Test]
@@ -106,34 +112,7 @@ final class IslandFactoryTest extends TestCase
 
         $internalIsland = $this->factory->make($island);
 
-        $this->assertInstanceOf(Archipelago_Internal_Boundary_NullAdapter::class, $internalIsland->getAdapter());
-    }
-
-    #[Test]
-    public function it_reuses_the_null_boundary_classes(): void
-    {
-        $firstIngress = Mockery::mock(Archipelago_Island_Inner_Ingress::class);
-        $secondIngress = Mockery::mock(Archipelago_Island_Inner_Ingress::class);
-
-        $firstIsland = $this->mockIsland('first', $firstIngress, null, null, null);
-        $secondIsland = $this->mockIsland('second', $secondIngress, null, null, null);
-
-        $this
-            ->validator
-            ->expects()
-            ->validate($firstIsland, 'first', $firstIngress, null, null, null);
-
-        $this
-            ->validator
-            ->expects()
-            ->validate($secondIsland, 'second', $secondIngress, null, null, null);
-
-        $firstInternalIsland = $this->factory->make($firstIsland);
-        $secondInternalIsland = $this->factory->make($secondIsland);
-
-        $this->assertSame($firstInternalIsland->getBootstrapper(), $secondInternalIsland->getBootstrapper());
-        $this->assertSame($firstInternalIsland->getConfigurator(), $secondInternalIsland->getConfigurator());
-        $this->assertSame($firstInternalIsland->getAdapter(), $secondInternalIsland->getAdapter());
+        $this->assertSame($this->nullAdapter, $internalIsland->getAdapter());
     }
 
     private function mockIsland(
@@ -178,6 +157,15 @@ final class IslandFactoryTest extends TestCase
         parent::setUp();
 
         $this->validator = Mockery::mock(Archipelago_Internal_Validator_Validator::class);
-        $this->factory = new Archipelago_Internal_IslandFactory($this->validator);
+        $this->nullBootstrapper = Mockery::mock(Archipelago_Internal_Boundary_NullBootstrapper::class);
+        $this->nullConfigurator = Mockery::mock(Archipelago_Internal_Boundary_NullConfigurator::class);
+        $this->nullAdapter = Mockery::mock(Archipelago_Internal_Boundary_NullAdapter::class);
+
+        $this->factory = new Archipelago_Internal_IslandFactory(
+            $this->validator,
+            $this->nullBootstrapper,
+            $this->nullConfigurator,
+            $this->nullAdapter,
+        );
     }
 }

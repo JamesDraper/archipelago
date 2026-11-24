@@ -11,27 +11,30 @@ class Archipelago_Internal_IslandFactory
     private $validator;
 
     /**
-     * @var Archipelago_Internal_Boundary_NullBootstrapper|null
+     * @var Archipelago_Internal_Boundary_NullBootstrapper
      */
     private $nullBootstrapper;
 
     /**
-     * @var Archipelago_Internal_Boundary_NullConfigurator|null
+     * @var Archipelago_Internal_Boundary_NullConfigurator
      */
     private $nullConfigurator;
 
     /**
-     * @var Archipelago_Internal_Boundary_NullAdapter|null
+     * @var Archipelago_Internal_Boundary_NullAdapter
      */
     private $nullAdapter;
 
-    public function __construct(Archipelago_Internal_Validator_Validator $validator)
-    {
+    public function __construct(
+        Archipelago_Internal_Validator_Validator $validator,
+        Archipelago_Internal_Boundary_NullBootstrapper $nullBootstrapper,
+        Archipelago_Internal_Boundary_NullConfigurator $nullConfigurator,
+        Archipelago_Internal_Boundary_NullAdapter $nullAdapter,
+    ) {
         $this->validator = $validator;
-
-        $this->nullBootstrapper = null;
-        $this->nullConfigurator = null;
-        $this->nullAdapter = null;
+        $this->nullBootstrapper = $nullBootstrapper;
+        $this->nullConfigurator = $nullConfigurator;
+        $this->nullAdapter = $nullAdapter;
     }
 
     /**
@@ -50,53 +53,17 @@ class Archipelago_Internal_IslandFactory
         $this->validator->validate($island, $name, $ingress, $bootstrapper, $configurator, $adapter);
 
         $bootstrapper = (null === $bootstrapper)
-            ? $this->getNullBootstrapper()
+            ? $this->nullBootstrapper
             : $bootstrapper;
 
         $configurator = (null === $configurator)
-            ? $this->getNullConfigurator()
+            ? $this->nullConfigurator
             : $configurator;
 
         $adapter = (null === $adapter)
-            ? $this->getNullAdapter()
+            ? $this->nullAdapter
             : $adapter;
 
         return new Archipelago_Internal_Island($name, $ingress, $bootstrapper, $configurator, $adapter);
-    }
-
-    /**
-     * @return Archipelago_Internal_Boundary_NullBootstrapper
-     */
-    private function getNullBootstrapper()
-    {
-        if (null === $this->nullBootstrapper) {
-            $this->nullBootstrapper = new Archipelago_Internal_Boundary_NullBootstrapper();
-        }
-
-        return $this->nullBootstrapper;
-    }
-
-    /**
-     * @return Archipelago_Internal_Boundary_NullConfigurator
-     */
-    private function getNullConfigurator()
-    {
-        if (null === $this->nullConfigurator) {
-            $this->nullConfigurator = new Archipelago_Internal_Boundary_NullConfigurator();
-        }
-
-        return $this->nullConfigurator;
-    }
-
-    /**
-     * @return Archipelago_Internal_Boundary_NullAdapter
-     */
-    private function getNullAdapter()
-    {
-        if (null === $this->nullAdapter) {
-            $this->nullAdapter = new Archipelago_Internal_Boundary_NullAdapter();
-        }
-
-        return $this->nullAdapter;
     }
 }
