@@ -2,13 +2,11 @@
 
 /**
  * @internal
- *
- * @template TValue
  */
 class Archipelago_Internal_Registry
 {
     /**
-     * @var array<string, TValue>
+     * @var array<string, Archipelago_Internal_Island>
      */
     private $map;
 
@@ -19,17 +17,16 @@ class Archipelago_Internal_Registry
 
     /**
      * @param string $key
-     * @param TValue $value
      * @return void
      */
-    public function set($key, $value)
+    public function set($key, Archipelago_Internal_Island $value)
     {
         $this->map[$key] = $value;
     }
 
     /**
      * @param string $key
-     * @return TValue
+     * @return Archipelago_Internal_Island
      */
     public function get($key)
     {
