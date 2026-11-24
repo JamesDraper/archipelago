@@ -41,11 +41,11 @@ class Archipelago_Internal_Validator_Validator
     public static function getInstance()
     {
         if (self::$instance === null) {
-            require_once dirname(__FILE__) . '/../NameValidator.php';
-            require_once dirname(__FILE__) . '/../IngressValidator.php';
-            require_once dirname(__FILE__) . '/../BootstrapperValidator.php';
-            require_once dirname(__FILE__) . '/../ConfiguratorValidator.php';
-            require_once dirname(__FILE__) . '/../AdapterValidator.php';
+            require_once dirname(__FILE__) . '/NameValidator.php';
+            require_once dirname(__FILE__) . '/IngressValidator.php';
+            require_once dirname(__FILE__) . '/BootstrapperValidator.php';
+            require_once dirname(__FILE__) . '/ConfiguratorValidator.php';
+            require_once dirname(__FILE__) . '/AdapterValidator.php';
 
             $nameValidator = Archipelago_Internal_Validator_NameValidator::getInstance();
             $ingressValidator = Archipelago_Internal_Validator_IngressValidator::getInstance();
