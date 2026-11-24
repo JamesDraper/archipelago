@@ -1,11 +1,11 @@
 /coverage/*
 /vendor/*
 
-/.phpunit.result.cache
 /.php-cs-fixer.src.cache
-/.php-cs-fixer.test.cache
 /.php-cs-fixer.src.php
+/.php-cs-fixer.test.cache
 /.php-cs-fixer.test.php
+/.phpunit.result.cache
 /composer.lock
 /phpstan.neon.src
 /phpstan.neon.test
