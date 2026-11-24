@@ -42,6 +42,7 @@ class Archipelago_Internal_Root
     {
         if (self::$instance === null) {
             require_once dirname(__FILE__) . '/ExceptionFactory/BadValueExceptionFactory.php';
+            require_once dirname(__FILE__) . '/Registry/Registry.php';
             require_once dirname(__FILE__) . '/Registry/UnactivatedIslandRegistry.php';
             require_once dirname(__FILE__) . '/Registry/ActivatedIslandRegistry.php';
             require_once dirname(__FILE__) . '/IslandFactory.php';
