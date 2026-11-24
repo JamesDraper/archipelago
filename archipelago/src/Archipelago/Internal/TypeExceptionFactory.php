@@ -83,7 +83,7 @@ class Archipelago_Internal_TypeExceptionFactory
 
         $message = sprintf('argument %d should be %s, got %s', $position, $expectedExpression, $type);
 
-        return $this->makeSelf($pathOrObject, $method, $message);
+        return $this->makeException($pathOrObject, $method, $message);
     }
 
     /**
@@ -99,7 +99,7 @@ class Archipelago_Internal_TypeExceptionFactory
 
         $message = sprintf('should return %s, got %s', $expectedExpression, $type);
 
-        return $this->makeSelf($pathOrObject, $method, $message);
+        return $this->makeException($pathOrObject, $method, $message);
     }
 
     /**
@@ -140,7 +140,7 @@ class Archipelago_Internal_TypeExceptionFactory
      * @param string $message
      * @return Archipelago_TypeException
      */
-    private function makeSelf($pathOrObject, $method, $message)
+    private function makeException($pathOrObject, $method, $message)
     {
         $class = is_object($pathOrObject)
             ? get_class($pathOrObject)
