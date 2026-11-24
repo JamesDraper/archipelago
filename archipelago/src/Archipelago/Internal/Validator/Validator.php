@@ -6,6 +6,11 @@
 class Archipelago_Internal_Validator_Validator
 {
     /**
+     * @var self|null
+     */
+    private static $instance = null;
+
+    /**
      * @var Archipelago_Internal_Validator_NameValidator
      */
     private $nameValidator;
@@ -29,6 +34,36 @@ class Archipelago_Internal_Validator_Validator
      * @var Archipelago_Internal_Validator_AdapterValidator
      */
     private $adapterValidator;
+
+    /**
+     * @return self
+     */
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            require_once dirname(__FILE__) . '/../NameValidator.php';
+            require_once dirname(__FILE__) . '/../IngressValidator.php';
+            require_once dirname(__FILE__) . '/../BootstrapperValidator.php';
+            require_once dirname(__FILE__) . '/../ConfiguratorValidator.php';
+            require_once dirname(__FILE__) . '/../AdapterValidator.php';
+
+            $nameValidator = Archipelago_Internal_Validator_NameValidator::getInstance();
+            $ingressValidator = Archipelago_Internal_Validator_IngressValidator::getInstance();
+            $bootstrapperValidator = Archipelago_Internal_Validator_BootstrapperValidator::getInstance();
+            $configuratorValidator = Archipelago_Internal_Validator_ConfiguratorValidator::getInstance();
+            $adapterValidator = Archipelago_Internal_Validator_AdapterValidator::getInstance();
+
+            self::$instance = new self(
+                $nameValidator,
+                $ingressValidator,
+                $bootstrapperValidator,
+                $configuratorValidator,
+                $adapterValidator
+            );
+        }
+
+        return self::$instance;
+    }
 
     public function __construct(
         Archipelago_Internal_Validator_NameValidator $nameValidator,

@@ -6,6 +6,11 @@
 class Archipelago_Internal_Validator_NameValidator
 {
     /**
+     * @var self|null
+     */
+    private static $instance = null;
+
+    /**
      * @var Archipelago_Internal_ExceptionFactory_TypeExceptionFactory
      */
     private $typeExceptionFactory;
@@ -14,6 +19,24 @@ class Archipelago_Internal_Validator_NameValidator
      * @var Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory
      */
     private $badValueExceptionFactory;
+
+    /**
+     * @return self
+     */
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            require_once dirname(__FILE__) . '/../ExceptionFactory/TypeExceptionFactory.php';
+            require_once dirname(__FILE__) . '/../ExceptionFactory/BadValueExceptionFactory.php';
+
+            $typeExceptionFactory = Archipelago_Internal_ExceptionFactory_TypeExceptionFactory::getInstance();
+            $badValueExceptionFactory = Archipelago_Internal_ExceptionFactory_BadValueExceptionFactory::getInstance();
+
+            self::$instance = new self($typeExceptionFactory, $badValueExceptionFactory);
+        }
+
+        return self::$instance;
+    }
 
     public function __construct(
         Archipelago_Internal_ExceptionFactory_TypeExceptionFactory $typeExceptionFactory,
