@@ -1,6 +1,7 @@
 /coverage/*
 /vendor/*
 
+/.php-cs-fixer.cache
 /.php-cs-fixer.src.cache
 /.php-cs-fixer.src.php
 /.php-cs-fixer.test.cache
