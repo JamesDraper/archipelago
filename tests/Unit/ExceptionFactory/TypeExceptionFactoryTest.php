@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\ExceptionFactory;
@@ -7,7 +8,6 @@ use Archipelago_Internal_ExceptionFactory_TypeExceptionFactory;
 use Archipelago_TypeException;
 
 use Tests\Unit\TestCase;
-
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;

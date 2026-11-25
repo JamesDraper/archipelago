@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Integration;
@@ -12,16 +13,19 @@ use PHPUnit\Framework\Attributes\Test;
 
 use stdClass;
 
+use function get_class;
+use function sprintf;
+
 /**
  * Tests that assert that an island can be registered properly, and
  * throws exceptions if an island fails validation.
  *
  * @phpstan-type NameScenario array{
- *     name: string, 
+ *     name: string,
  * }
  * @phpstan-type ValueTypeScenario array{
  *     value: mixed,
- *     type: string, 
+ *     type: string,
  * }
  */
 final class RegisterTest extends TestCase

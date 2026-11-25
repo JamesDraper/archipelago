@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Validator;
@@ -85,7 +86,7 @@ final class NameValidatorTest extends TestCase
     {
         $this->assertThrowsBadValueFactoryException(
             'Island name cannot be empty.',
-            fn () => $this->validator->assertNotEmpty(''),
+            fn() => $this->validator->assertNotEmpty(''),
         );
     }
 
@@ -121,7 +122,7 @@ final class NameValidatorTest extends TestCase
 
         $this->assertThrowsBadValueFactoryException(
             $expectedMessage,
-            fn () => $this->validator->assertNameValid($name),
+            fn() => $this->validator->assertNameValid($name),
         );
     }
 

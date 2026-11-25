@@ -85,7 +85,7 @@ final class UnactivatedIslandRegistryTest extends TestCase
             ->atLeast()
             ->once()
             ->andReturn('island');
-        
+
         $island
             ->expects()
             ->getBootstrapper()

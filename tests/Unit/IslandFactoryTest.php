@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit;
@@ -14,7 +15,6 @@ use Archipelago_Internal_IslandFactory;
 use Archipelago_Island_Inner_Ingress;
 use Archipelago_Internal_Island;
 use Archipelago_Island;
-
 
 use PHPUnit\Framework\Attributes\Test;
 
@@ -133,17 +133,17 @@ final class IslandFactoryTest extends TestCase
             ->expects()
             ->getIngress()
             ->andReturn($ingress);
-        
+
         $island
             ->expects()
             ->getBootstrapper()
             ->andReturn($bootstrapper);
-        
+
         $island
             ->expects()
             ->getConfigurator()
             ->andReturn($configurator);
-        
+
         $island
             ->expects()
             ->getAdapter()

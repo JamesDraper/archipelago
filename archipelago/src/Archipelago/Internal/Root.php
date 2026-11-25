@@ -90,7 +90,7 @@ class Archipelago_Internal_Root
     {
         $unactivatedIsland = $this->unactivatedRegistry->get($name);
 
-        if (!is_null($unactivatedIsland)) {
+        if (null !== $unactivatedIsland) {
             $this->activatedRegistry->add($unactivatedIsland);
             $this->unactivatedRegistry->remove($name);
 
@@ -98,7 +98,7 @@ class Archipelago_Internal_Root
         } else {
             $activatedIsland = $this->activatedRegistry->get($name);
 
-            if (is_null($activatedIsland)) {
+            if (null === $activatedIsland) {
                 throw $this->badValueExceptionFactory->make(sprintf(
                     'No island registered named "%s".',
                     $name
@@ -123,7 +123,7 @@ class Archipelago_Internal_Root
         $internalIsland = $this->islandFactory->make($island);
         $name = $internalIsland->getName();
 
-        if (!is_null($this->unactivatedRegistry->get($name)) || !is_null($this->activatedRegistry->get($name))) {
+        if ((null !== $this->unactivatedRegistry->get($name)) || (null !== $this->activatedRegistry->get($name))) {
             throw $this->badValueExceptionFactory->make(sprintf(
                 'Island already registered named "%s".',
                 $name

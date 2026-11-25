@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Integration;
@@ -109,7 +110,7 @@ final class InitializationTest extends TestCase
     #[Test]
     public function it_calls_onRegister_onFirstRun_and_configure(): void
     {
-        // Assert that onRegister(), onFirstRun(), and configure() 
+        // Assert that onRegister(), onFirstRun(), and configure()
         // are all called in the right order before the ingress is invoked
         // if the island has a bootstrapper and a configurator.
 
@@ -145,7 +146,7 @@ final class InitializationTest extends TestCase
             ->globally()
             ->ordered();
 
-        Archipelago::run('island', $request);        
+        Archipelago::run('island', $request);
     }
 
     #[Test]

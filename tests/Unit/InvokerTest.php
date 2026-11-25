@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit;
@@ -12,7 +13,6 @@ use Archipelago_Island_Inner_Request;
 use Archipelago_Island_Inner_Ingress;
 use Archipelago_Internal_Invoker;
 use Archipelago_TypeException;
-
 
 use PHPUnit\Framework\Attributes\Test;
 

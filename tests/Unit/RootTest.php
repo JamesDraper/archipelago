@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit;
@@ -64,7 +65,7 @@ final class RootTest extends TestCase
             ->allows()
             ->get('island')
             ->andReturn(null);
-        
+
         $this
             ->unactivatedRegistry
             ->expects()
@@ -105,7 +106,7 @@ final class RootTest extends TestCase
 
         $this->assertThrowsFactoryException(
             'Island already registered named "island".',
-            fn () => $this->root->register($island),
+            fn() => $this->root->register($island),
         );
     }
 
@@ -141,7 +142,7 @@ final class RootTest extends TestCase
 
         $this->assertThrowsFactoryException(
             'Island already registered named "island".',
-            fn () => $this->root->register($island),
+            fn() => $this->root->register($island),
         );
     }
 
@@ -158,7 +159,7 @@ final class RootTest extends TestCase
             ->expects()
             ->getAdapter()
             ->andReturn($adapter);
-        
+
         $internalIsland
             ->expects()
             ->getIngress()
@@ -169,7 +170,7 @@ final class RootTest extends TestCase
             ->expects()
             ->get('island')
             ->andReturn($internalIsland);
-        
+
         $this
             ->unactivatedRegistry
             ->expects()
@@ -202,7 +203,7 @@ final class RootTest extends TestCase
             ->expects()
             ->getAdapter()
             ->andReturn($adapter);
-        
+
         $internalIsland
             ->expects()
             ->getIngress()
@@ -248,7 +249,7 @@ final class RootTest extends TestCase
 
         $this->assertThrowsFactoryException(
             'No island registered named "island".',
-            fn () => $this->root->run('island', $request),
+            fn() => $this->root->run('island', $request),
         );
     }
 

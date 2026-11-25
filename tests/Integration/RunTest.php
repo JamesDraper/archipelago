@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Integration;
@@ -11,6 +12,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 
 use stdClass;
+
+use function get_class;
+use function sprintf;
 
 /**
  * @phpstan-type InvalidObjectScenario array{
@@ -410,7 +414,7 @@ final class RunTest extends TestCase
         $outerRequest = $this->mockOuterRequest();
         $ingress = $this->mockIngress();
 
-         Archipelago::register($this->mockIsland('island', $ingress));
+        Archipelago::register($this->mockIsland('island', $ingress));
 
         $this->expectException(Archipelago_TypeException::class);
         $this->expectExceptionMessage(sprintf(

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Boundary;
@@ -18,6 +19,8 @@ use PHPUnit\Framework\Attributes\Test;
 
 use Mockery\MockInterface;
 use Mockery;
+
+use function get_class;
 
 final class NullAdapterTest extends TestCase
 {
