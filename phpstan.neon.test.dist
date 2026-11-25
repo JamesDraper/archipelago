@@ -1,6 +1,7 @@
 parameters:
     level: max
-    phpVersion: 80400
+    phpVersion: 80501
+    treatPhpDocTypesAsCertain: false
     paths:
         - tests
 
