@@ -12,6 +12,12 @@ use PHPUnit\Framework\Attributes\Test;
 
 use stdClass;
 
+/**
+ * @phpstan-type InvalidObjectScenario array{
+ *     value: mixed,
+ *     type: string
+ * }
+ */
 final class RunTest extends TestCase
 {
     #[Test]
@@ -327,6 +333,9 @@ final class RunTest extends TestCase
         Archipelago::run('island', $outerRequest);
     }
 
+    /**
+     * @return array<string, InvalidObjectScenario>
+     */
     public static function invalid_objects_provider(): array
     {
         return [

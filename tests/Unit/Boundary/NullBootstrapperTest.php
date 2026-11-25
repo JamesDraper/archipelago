@@ -17,6 +17,7 @@ final class NullBootstrapperTest extends TestCase
     {
         $bootstrapper = new Archipelago_Internal_Boundary_NullBootstrapper();
 
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertInstanceOf(Archipelago_Island_Boundary_Bootstrapper::class, $bootstrapper);
     }
 }

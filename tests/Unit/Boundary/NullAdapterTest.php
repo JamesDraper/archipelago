@@ -28,6 +28,7 @@ final class NullAdapterTest extends TestCase
     #[Test]
     public function it_is_an_adapter(): void
     {
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertInstanceOf(Archipelago_Island_Boundary_Adapter::class, $this->adapter);
     }
 

@@ -19,8 +19,6 @@ use Mockery;
 
 use ReflectionProperty;
 
-use function vsprintf;
-
 abstract class TestCase extends \Tests\TestCase
 {
     /**
@@ -28,10 +26,9 @@ abstract class TestCase extends \Tests\TestCase
      */
     final protected function mockRequest()
     {
-        return Mockery::mock(vsprintf('%s,%s', [
-            Archipelago_Island_Inner_Request::class,
-            Archipelago_Island_Outer_Request::class,
-        ]));
+        return Mockery::mock(
+            Archipelago_Island_Inner_Request::class . ',' . Archipelago_Island_Outer_Request::class,
+        );
     }
 
     /**
@@ -39,10 +36,9 @@ abstract class TestCase extends \Tests\TestCase
      */
     final protected function mockResponse()
     {
-        return Mockery::mock(vsprintf('%s,%s', [
-            Archipelago_Island_Inner_Response::class,
-            Archipelago_Island_Outer_Response::class,
-        ]));
+        return Mockery::mock(
+            Archipelago_Island_Inner_Response::class . ',' . Archipelago_Island_Outer_Response::class,
+        );
     }
 
     final protected function mockInnerRequest(): Archipelago_Island_Inner_Request&MockInterface

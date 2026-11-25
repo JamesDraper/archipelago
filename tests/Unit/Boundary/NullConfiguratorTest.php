@@ -17,6 +17,7 @@ final class NullConfiguratorTest extends TestCase
     {
         $configurator = new Archipelago_Internal_Boundary_NullConfigurator();
 
+        // @phpstan-ignore method.alreadyNarrowedType
         $this->assertInstanceOf(Archipelago_Island_Boundary_Configurator::class, $configurator);
     }
 }

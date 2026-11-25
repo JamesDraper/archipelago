@@ -16,8 +16,12 @@ use stdClass;
  * Tests that assert that an island can be registered properly, and
  * throws exceptions if an island fails validation.
  *
- * @phpstan-type array NameScenario{
+ * @phpstan-type NameScenario array{
  *     name: string, 
+ * }
+ * @phpstan-type ValueTypeScenario array{
+ *     value: mixed,
+ *     type: string, 
  * }
  */
 final class RegisterTest extends TestCase
@@ -137,9 +141,6 @@ final class RegisterTest extends TestCase
             'slash' => [
                 'name' => 'island/name',
             ],
-            'slash' => [
-                'name' => 'island/name',
-            ],
             'trailing newline' => [
                 'name' => "island\n",
             ],
@@ -161,11 +162,11 @@ final class RegisterTest extends TestCase
 
     #[Test]
     #[DataProvider('it_rejects_an_island_whose_name_is_not_a_string_provider')]
-    public function it_rejects_an_island_whose_name_is_not_a_string(mixed $name, string $type): void
+    public function it_rejects_an_island_whose_name_is_not_a_string(mixed $value, string $type): void
     {
         // Assert that registering an island with an non-string name throws an Archipelago_TypeValueException.
 
-        $island = $this->mockIsland($name, $this->mockIngress());
+        $island = $this->mockIsland($value, $this->mockIngress());
 
         $this->expectException(Archipelago_TypeException::class);
         $this->expectExceptionMessage(get_class($island) . "::getName() should return string, got {$type}.");
@@ -173,23 +174,26 @@ final class RegisterTest extends TestCase
         Archipelago::register($island);
     }
 
+    /**
+     * @return array<string, ValueTypeScenario>
+     */
     public static function it_rejects_an_island_whose_name_is_not_a_string_provider(): array
     {
         return [
             'null' => [
-                'name' => null,
+                'value' => null,
                 'type' => 'null',
             ],
             'int' => [
-                'name' => 1,
+                'value' => 1,
                 'type' => 'int',
             ],
             'array' => [
-                'name' => [1, 2, 3],
+                'value' => [1, 2, 3],
                 'type' => 'array',
             ],
             'object' => [
-                'name' => new stdClass(),
+                'value' => new stdClass(),
                 'type' => 'object(stdClass)',
             ],
         ];
@@ -213,6 +217,9 @@ final class RegisterTest extends TestCase
         Archipelago::register($island);
     }
 
+    /**
+     * @return array<string, ValueTypeScenario>
+     */
     public static function it_rejects_an_island_with_an_invalid_ingress_provider(): array
     {
         return [
@@ -292,6 +299,9 @@ final class RegisterTest extends TestCase
         Archipelago::register($island);
     }
 
+    /**
+     * @return array<string, ValueTypeScenario>
+     */
     public static function invalid_bootstrapper_configurator_adapter_objects_provider(): array
     {
         return [
