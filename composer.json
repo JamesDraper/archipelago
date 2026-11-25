@@ -2,6 +2,12 @@
     "name": "james-draper/archipelago",
     "description": "PHP 5.0.0+ compatible legacy refactoring framework.",
     "type": "library",
+    "keywords": [
+        "legacy",
+        "refactoring",
+        "migration",
+        "spaghetti"
+    ],
     "license": "MIT",
     "autoload": {
         "files": ["archipelago/bootstrap.php"]
